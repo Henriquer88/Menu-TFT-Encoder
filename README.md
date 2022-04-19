@@ -24,5 +24,8 @@ Utilização do Encoder/Decoder KY-040 Rotacional com Display TFT
 # Encoder/Decoder KY-040 Rotacional   
 
  No tutorial Shield TFT criamos três botôes retângulares, sendo que cada botão corresponde a um determinado comando, só que dessa vez não utilizaremos a função Touch Screen, mas sim o Encoder/Decoder KY-040. 
+ 
+ 
+ https://imgur.com/a/EZeKdqQ
 
 
