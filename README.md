@@ -13,3 +13,5 @@ Utilização do Encoder/Decoder KY-040 Rotacional com Display TFT
 * Compilador MBED [link](https://os.mbed.com/)
 * Display 2.4 Touch 
 * Encoder/Decoder KY-040 Rotacional
+
+
