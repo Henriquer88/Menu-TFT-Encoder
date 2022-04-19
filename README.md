@@ -14,4 +14,6 @@ Utilização do Encoder/Decoder KY-040 Rotacional com Display TFT
 * Display 2.4 Touch 
 * Encoder/Decoder KY-040 Rotacional
 
+# Orientações
+  Para a realizção dessa prototipação vamos utilizar tutorial [link](https://github.com/Henriquer88/Shield-TFT) como base para criação dos botões no display
 
