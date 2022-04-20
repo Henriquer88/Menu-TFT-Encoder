@@ -29,4 +29,50 @@ Utilização do Encoder/Decoder KY-040 Rotacional com Display TFT
 ![encoder](https://user-images.githubusercontent.com/60757810/164022619-56b37e97-23e2-4164-972b-78bad606735d.PNG)
 
 
+# Leitura dos Pulsos do KY-040
+
+* Código 
+
+```javascript
+//***********************Encoder/Decoder KY-040*******************************//
+//**19/04/2022
+//**************************** Henrique **************************************//
+
+#include "mbed.h"
+#include "Encoder.h"  // Biblioteca responsável pela leitura dos pulsos
+
+//****************************************************************************//
+//****************************************************************************//
+
+
+
+//****************************************************************************//
+int pulse;  // Variável responsável atribuída para leitura dos pulsos
+//****************************************************************************//
+
+
+
+
+
+//****************************************************************************//
+int main()
+{
+
+
+    EncoderAli Enc(PB_13,PB_14,PB_15); //  Ligação do KY-040 nos pinos da Nucleo  -  DT, CLK, SW
+    Enc.setRange(1,20); // Função responsável por setar o Range do Encoder
+    while(1) {
+        printf("\n\r PULSOS: %d; ",Enc.getState()); // Enc.getState() -> Função Responsável por ler os pulsos 
+                                                    // Enc.getButtonState()-> Função responsável por ler o estado do botão SW
+        
+        pulse = Enc.getState();
+        
+
+    }
+}
+
+//****************************************************************************//
+
+```
+
 
