@@ -76,3 +76,6 @@ int main()
 ```
 
 Obs: Devido ao efeito de Debounce é recomendado o uso de capacitores 100nf nos pinos CLK , DT e SW
+
+
+# Menu básico com o KY-040
