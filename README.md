@@ -60,9 +60,9 @@ int main()
 
 
     EncoderAli Enc(PB_13,PB_14,PB_15); //  Ligação do KY-040 nos pinos da Nucleo  -  DT, CLK, SW
-    Enc.setRange(1,20); // Função responsável por setar o Range do Encoder
+    Enc.setRange(1,20);               // Função responsável por setar o Range do Encoder
     while(1) {
-        printf("\n\r PULSOS: %d; ",Enc.getState()); // Enc.getState() -> Função Responsável por ler os pulsos 
+        printf("\n\r PULSOS: %d; ",Enc.getState()); // Enc.getState()      -> Função Responsável por ler os pulsos 
                                                     // Enc.getButtonState()-> Função responsável por ler o estado do botão SW
         
         pulse = Enc.getState();
