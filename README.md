@@ -79,8 +79,9 @@ Obs: Devido ao efeito de Debounce é recomendado o uso de capacitores 100nf nos 
 
 
 # Menu básico com o KY-040
- Usando como base o código do Menu Touch, vamos apenas substituir algumas linhas do código.
+ Usando como base o código do Menu Touch, vamos apenas substituir algumas linhas.
 * Código 
+* 
 ```javascript
 
 
@@ -322,3 +323,18 @@ void loop()
 //****************************************************************************//
 
 ```
+Compilando o código teremos o resultado abaixo :
+
+
+
+https://user-images.githubusercontent.com/60757810/165302563-2fc22892-9383-4742-8184-445d8fac45ec.mp4
+
+
+
+
+
+
+
+
+
+
