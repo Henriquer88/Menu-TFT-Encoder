@@ -79,3 +79,246 @@ Obs: Devido ao efeito de Debounce é recomendado o uso de capacitores 100nf nos 
 
 
 # Menu básico com o KY-040
+ Usando como base o código do Menu Touch, vamos apenas substituir algumas linhas do código.
+* Código 
+```javascript
+
+
+//******************************Henrique**************************************//
+
+//********************Programa Exemplo  Menu com botões***********************//
+
+
+//***********************Display TFT-ILI9341 Toutch***************************//
+
+
+//*****************************Biblioteca*************************************//
+
+
+#include "mbed.h"
+#include "Arduino.h"
+#include <MCUFRIEND_kbv.h>
+MCUFRIEND_kbv tft;
+#include "TouchScreen_kbv_mbed.h"
+#include "Encoder.h"                            // Biblioteca para uso do KY-040
+
+//************************Configuração do Display*****************************//
+
+//****************************************************************************//
+
+const int TS_LEFT=121,TS_RT=922,TS_TOP=82,TS_BOT=890;
+const PinName XP = D8, YP = A3, XM = A2, YM = D9;   //next common configuration
+DigitalInOut YPout(YP);
+DigitalInOut XMout(XM);
+
+
+long map(long x, long in_min, long in_max, long out_min, long out_max)
+{
+   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+TouchScreen_kbv ts = TouchScreen_kbv(XP, YP, XM, YM, 300);
+TSPoint_kbv tp;
+
+// Valores para detectar a pressão do toque
+
+#define MINPRESSURE 10
+#define MAXPRESSURE 1000
+
+//****************************************************************************//
+
+//****************************************************************************//
+
+//***********************Orientação Display***********************************//
+
+uint8_t Orientation = 0;
+
+//****************************************************************************//
+
+//****************************************************************************//
+
+
+bool botao_1 = 0;
+bool botao_2 = 0;
+bool botao_3 = 0;
+int pulse;                            //  Variável responsável por ler os pulsos 
+bool sw;
+
+//***********************Tabela de Cores**************************************//
+
+#define BLACK   0x0000
+#define BLUE    0x001F
+#define RED     0xF800
+#define GREEN   0x07E0
+#define CYAN    0x07FF
+#define MAGENTA 0xF81F
+#define YELLOW  0xFFE0
+#define WHITE   0xFFFF
+
+//****************************************************************************//
+
+//****************************************************************************//
+
+
+void draw()
+
+{
+
+   tft.drawRoundRect(5, 15, 154, 50, 5, WHITE);
+   tft.setTextColor(GREEN);
+   tft.setTextSize(3);
+   tft.setCursor(15, 30);
+   tft.println("Button 1");
+
+   tft.drawRoundRect(5, 70, 154, 50, 5, WHITE);
+   tft.setTextColor(GREEN);
+   tft.setTextSize(3);
+   tft.setCursor(15,85);
+   tft.println("Button 2");
+
+   tft.drawRoundRect(5, 125, 154, 50, 5, WHITE);
+   tft.setTextColor(GREEN);
+   tft.setTextSize(3);
+   tft.setCursor(15,140);
+   tft.println("Button 3");
+
+}
+
+
+void show_tft(void)
+{
+    
+    EncoderAli Enc(PB_13,PB_14,PB_15); //DT, CLK, SW
+    Enc.setRange(1,16);               //  Configurando o Range do Encoder 
+
+
+   tft.setTextSize(2);
+
+
+   tft.setTextColor(MAGENTA,BLUE);
+   
+   while (1) {
+
+    pulse = Enc.getState();
+    sw = Enc.getButtonState();
+   printf("\n\r PULSOS: %d; ",Enc.getState()); 
+       tp = ts.getPoint();
+       YPout.output();
+       XMout.output();
+
+       if (tp.z < MINPRESSURE && tp.z > MAXPRESSURE)
+
+           tp.x = tft.width() - (map(tp.x, TS_RT, TS_LEFT, tft.width(), 0));
+           tp.y = tft.height() - (map(tp.y, TS_BOT, TS_TOP, tft.height(), 0));
+
+
+if (pulse>=2 && pulse<=5) {  // Criação de uma janela para seleção do primeito botão
+           
+           if(sw==true) {
+
+               tft.fillRoundRect(5, 15, 154, 50, 5, RED);
+               tft.setCursor(15, 30);
+               tft.println("Button 1");
+               //tft.fillScreen(BLUE);
+              // sw =!sw;
+           }
+
+           else {
+
+               tft.fillRoundRect(5, 15, 154, 50, 5, BLACK);
+               tft.drawRoundRect(5, 15, 154, 50, 5, WHITE);
+               tft.setTextColor(GREEN);
+               tft.setTextSize(3);
+               tft.setCursor(15, 30);
+               tft.println("Button 1");
+               //tft.fillScreen(BLACK);
+
+               //sw =!sw;
+
+           }
+       }
+
+
+if (pulse>=6 && pulse<=10) {// Criação de uma janela para seleção do segundo botão
+           
+           if(sw==true) {
+
+               tft.fillRoundRect(5, 70, 154, 50, 5, BLUE);
+               tft.setTextColor(GREEN);
+               tft.setTextSize(3);
+               tft.setCursor(15, 85);
+               tft.println("Button 2");
+               botao_2 =!botao_2;
+           }
+
+           else {
+
+
+               tft.fillRoundRect(5, 70, 154, 50, 5, BLACK);
+               tft.drawRoundRect(5, 70, 154, 50, 5, WHITE);
+               tft.setTextColor(GREEN);
+               tft.setTextSize(3);
+               tft.setCursor(15,85);
+               tft.println("Button 2");
+               botao_2 =!botao_2;
+           }
+       }
+
+if (pulse>11 && pulse<=14) {// Criação de uma janela para seleção do terceiro botão
+           
+           if(sw==true) {
+
+               tft.fillRoundRect(5, 125, 154, 50, 5, MAGENTA);
+               tft.setTextColor(GREEN);
+               tft.setTextSize(3);
+               tft.setCursor(15, 140);
+               tft.println("Button 3");
+               botao_3 =!botao_3;
+           }
+
+           else {
+               
+               tft.fillRoundRect(5, 125, 154, 50, 5, BLACK);
+               tft.drawRoundRect(5, 125, 154, 50, 5, WHITE);
+               tft.setTextColor(GREEN);
+               tft.setTextSize(3);
+               tft.setCursor(15,140);
+               tft.println("Button 3");
+               botao_3 =!botao_3;
+           }
+       }
+       
+   }
+}
+
+
+
+
+
+void setup(void)
+{
+    
+
+
+   tft.reset();
+   tft.begin();
+   tft.setRotation(Orientation);
+   tft.fillScreen(BLACK);
+   draw();
+   show_tft();
+
+
+   delay(1000);
+}
+
+void loop()
+{
+
+
+}
+
+//****************************************************************************//
+
+//****************************************************************************//
+
+```
